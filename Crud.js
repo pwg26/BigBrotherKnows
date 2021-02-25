@@ -13,6 +13,8 @@ const connection = mysql.createConnection({
   database: "dre_db",
 });
 
+// view deleate, update functions ===============================
+
 // Function to display all employees and data
 const viewEmployees = () => {
   console.log("Viewing all employees\n");
@@ -28,7 +30,13 @@ const viewEmployees = () => {
   );
 };
 
-// view deleate, update functions ===============================
+const viewEmployees = () => {
+  console.log("Viewing all employees\n");
+  connection.query(`SELECT * FROM answer`, (err, res) => {
+    if (err) throw err;
+    console.table(res);
+  });
+};
 
 // Function to deleate given employe
 const Delete = () => {
@@ -59,25 +67,28 @@ const Add = () => {
   );
 };
 
-// update function
-const Update = () => {
-  console.log("Updating?...\n");
-  connection.query(
-    `UPDATE employee SET ? WHERE ?`,
-    [
-      {
-        firstName: "Billow",
-      },
-      {
-        id: "1",
-      },
-    ],
-    (err, res) => {
-      if (err) throw err;
-      console.log("Welcome!");
-      viewEmployees();
-    }
-  );
+// update function with inquirer built in
+const Update = (answer) => {
+  switch (answer.first) {
+    case "Update a employee":
+      console.log("Updating?...\n");
+      connection.query(
+        `UPDATE employee SET ? WHERE ?`,
+        [
+          {
+            firstName: "Billow",
+          },
+          {
+            id: "1",
+          },
+        ],
+        (err, res) => {
+          if (err) throw err;
+          console.log("Welcome!");
+          viewEmployees();
+        }
+      );
+  }
 };
 
 // inquire prompts ===================================
@@ -85,7 +96,7 @@ const Update = () => {
 inquirer.prompt([
   {
     type: "list",
-    name: "choice",
+    name: "first",
     message: "How would you like to assert dominance on the organization?",
     choices: [
       "View all employees",
@@ -146,11 +157,64 @@ inquirer.prompt([
   },
 ]);
 
-// removal
+// update- employee
+
 inquirer.prompt([
   {
     type: "input",
-    name: "choice",
+    name: "empup1",
+    message: `Enter the id of the employee you would like to update`,
+  },
+  {
+    type: "input",
+    name: "empup2",
+    message: `Enter the new first name `,
+  },
+  {
+    type: "input",
+    name: "empup3",
+    message: `Enter the new last name`,
+  },
+]);
+
+// update- role
+inquirer.prompt([
+  {
+    type: "input",
+    name: "roleup1",
+    message: `Enter the id of the role you would like to update`,
+  },
+  {
+    type: "input",
+    name: "empup2",
+    message: `Enter the new title`,
+  },
+  {
+    type: "input",
+    name: "empup2",
+    message: `Enter the new salary`,
+  },
+]);
+
+// update- department
+inquirer.prompt([
+  {
+    type: "input",
+    name: "roleup1",
+    message: `Enter the id of the department you would like to update`,
+  },
+  {
+    type: "input",
+    name: "empup2",
+    message: `Enter the new department name`,
+  },
+]);
+
+// removal- works on all
+inquirer.prompt([
+  {
+    type: "input",
+    name: "gone",
     message: `Which ${answer} by id would you like to remove`,
   },
 ]);
