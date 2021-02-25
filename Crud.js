@@ -5,20 +5,17 @@ cTable = require("console.table");
 const connection = mysql.createConnection({
   host: "localhost",
 
-  // Your port; if not 3306
   port: 3306,
 
-  // Your username
   user: "root",
 
-  // Be sure to update with your own MySQL password!
   password: "PantheR1994*",
   database: "dre_db",
 });
 
 // Function to display all employees and data
 const viewEmployees = () => {
-  console.log("Selecting all items...\n");
+  console.log("Viewing all employees\n");
   connection.query(
     `SELECT employee.id, employee.firstName, employee.lastName, role.salary, role.title, department.name
     FROM employee
@@ -31,4 +28,33 @@ const viewEmployees = () => {
   );
 };
 
-viewEmployees();
+// Function to deleate given employe
+const Delete = () => {
+  console.log("Firing ?...\n");
+  connection.query(
+    `DELETE FROM employee WHERE ?`,
+    {
+      id: 5,
+    },
+    (err, res) => {
+      if (err) throw err;
+      console.log("Gone!");
+      viewEmployees();
+    }
+  );
+};
+
+// Function to deleate given employe
+const Add = () => {
+  console.log("Firing?...\n");
+  connection.query(
+    `INSERT INTO employee (firstName, lastName, role_id) VALUES("John", "Buck", 5)`,
+    (err, res) => {
+      if (err) throw err;
+      console.log("Welcome!");
+      viewEmployees();
+    }
+  );
+};
+
+Add();
