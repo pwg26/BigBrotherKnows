@@ -30,7 +30,7 @@ const viewEmployees = () => {
   );
 };
 
-const viewEmployees = () => {
+const viewTable = () => {
   console.log("Viewing all employees\n");
   connection.query(`SELECT * FROM answer`, (err, res) => {
     if (err) throw err;
@@ -92,28 +92,30 @@ const Update = (answers) => {
 };
 
 // inquire prompts ===================================
-
-inquirer.prompt([
-  {
-    type: "list",
-    name: "first",
-    message: "How would you like to assert dominance on the organization?",
-    choices: [
-      "View all employees",
-      "Add a emplpyee",
-      "Update a employee",
-      "Fire a employee",
-      "View all employee roles",
-      "Add a employee role",
-      "Update a employee role",
-      "remove a employee role",
-      "View all departments",
-      "Add a department",
-      "Update a department",
-      "Remove a department",
-    ],
-  },
-]);
+// Initial question
+Init = () => {
+  inquirer.prompt([
+    {
+      type: "list",
+      name: "first",
+      message: "How would you like to assert dominance on the organization?",
+      choices: [
+        "View all employees",
+        "Add a employee",
+        "Update a employee",
+        "Fire a employee",
+        "View all employee roles",
+        "Add a employee role",
+        "Update a employee role",
+        "remove a employee role",
+        "View all departments",
+        "Add a department",
+        "Update a department",
+        "Remove a department",
+      ],
+    },
+  ]);
+};
 
 // addition- employee
 addEmp = () => {
@@ -231,3 +233,25 @@ deleteInq = () => {
     },
   ]);
 };
+
+Init().then((answers) => {
+  switch (answers.first) {
+    case "View all employees":
+      viewEmployees(answers.first);
+      break;
+    case "View all employee roles" || "View all departments":
+      viewTable(answers.first);
+      break;
+    case "Add a employee" || "Add a employee role" || "Add a department":
+      Add(answers.first);
+      break;
+    case "Update a employee" ||
+      "Update a employee role" ||
+      "Update a department":
+      Update(answers.first);
+      break;
+    case "Fire a employee" || "remove a employee role" || "Remove a department":
+      viewTable(answers.first);
+      break;
+  }
+});
