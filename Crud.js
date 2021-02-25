@@ -30,15 +30,24 @@ const viewEmployees = () => {
   );
 };
 
-const viewTable = () => {
-  console.log("Viewing all employees\n");
-  connection.query(`SELECT * FROM answer`, (err, res) => {
-    if (err) throw err;
-    console.table(res);
-  });
+// function to view role or department table
+const viewTable = (answer) => {
+  if (answer === "View all employee roles") {
+    console.log("Viewing all employee roles\n");
+    connection.query(`SELECT * FROM roles`, (err, res) => {
+      if (err) throw err;
+      console.table(res);
+    });
+  } else {
+    console.log("Viewing all departments\n");
+    connection.query(`SELECT * FROM departments`, (err, res) => {
+      if (err) throw err;
+      console.table(res);
+    });
+  }
 };
 
-// Function to deleate given employe
+// Function to delete given employe
 const Delete = () => {
   console.log("Firing ?...\n");
   connection.query(
@@ -237,7 +246,7 @@ deleteInq = () => {
 Init().then((answers) => {
   switch (answers.first) {
     case "View all employees":
-      viewEmployees(answers.first);
+      viewEmployees();
       break;
     case "View all employee roles" || "View all departments":
       viewTable(answers.first);
@@ -251,7 +260,7 @@ Init().then((answers) => {
       Update(answers.first);
       break;
     case "Fire a employee" || "remove a employee role" || "Remove a department":
-      viewTable(answers.first);
+      Delete(answers.first);
       break;
   }
 });
