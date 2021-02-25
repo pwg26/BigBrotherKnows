@@ -28,6 +28,8 @@ const viewEmployees = () => {
   );
 };
 
+// view deleate, update functions ===============================
+
 // Function to deleate given employe
 const Delete = () => {
   console.log("Firing ?...\n");
@@ -78,22 +80,77 @@ const Update = () => {
   );
 };
 
-Update();
+// inquire prompts ===================================
 
-// inquire
+inquirer.prompt([
+  {
+    type: "list",
+    name: "choice",
+    message: "How would you like to assert dominance on the organization?",
+    choices: [
+      "View all employees",
+      "Add a emplpyee",
+      "Update a employee",
+      "Fire a employee",
+      "View all employee roles",
+      "Add a employee role",
+      "Update a employee role",
+      "remove a employee role",
+      "View all departments",
+      "Add a department",
+      "Update a department",
+      "Remove a department",
+    ],
+  },
+]);
 
-// inquirer
-//     .prompt([
-//       {
-//         type: "list",
-//         name: "choice",
-//         message: "How would you like to assert dominance on the organization?",
-//         choices: [
-//           "View all employees",
-//           " a emplpyee",
-//           "Add a employee role",
-//           "Add a department",
-//           "Fir an "
-//         ],
-//       },
-//     ])
+// addition- employee
+inquirer.prompt([
+  {
+    type: "input",
+    name: "fname",
+    message: `Enter first the employees first name`,
+  },
+  {
+    type: "input",
+    name: "lname",
+    message: `Enter first the employees last name`,
+  },
+  {
+    type: "input",
+    name: "role",
+    message: `Enter the employee role number`,
+  },
+]);
+
+// addition- role
+inquirer.prompt([
+  {
+    type: "input",
+    name: "title",
+    message: `Enter the new roles title`,
+  },
+  {
+    type: "input",
+    name: "sal",
+    message: `Enter the salary for the role`,
+  },
+]);
+
+// addition- department
+inquirer.prompt([
+  {
+    type: "input",
+    name: "dep",
+    message: `Enter the departments title`,
+  },
+]);
+
+// removal
+inquirer.prompt([
+  {
+    type: "input",
+    name: "choice",
+    message: `Which ${answer} by id would you like to remove`,
+  },
+]);
