@@ -68,7 +68,7 @@ const Add = () => {
 };
 
 // update function with inquirer built in
-const Update = (answer) => {
+const Update = (answers) => {
   switch (answer.first) {
     case "Update a employee":
       console.log("Updating?...\n");
@@ -116,105 +116,118 @@ inquirer.prompt([
 ]);
 
 // addition- employee
-inquirer.prompt([
-  {
-    type: "input",
-    name: "fname",
-    message: `Enter first the employees first name`,
-  },
-  {
-    type: "input",
-    name: "lname",
-    message: `Enter first the employees last name`,
-  },
-  {
-    type: "input",
-    name: "role",
-    message: `Enter the employee role number`,
-  },
-]);
+addEmp = () => {
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "fname",
+      message: `Enter first the employees first name`,
+    },
+    {
+      type: "input",
+      name: "lname",
+      message: `Enter first the employees last name`,
+    },
+    {
+      type: "input",
+      name: "role",
+      message: `Enter the employee role number`,
+    },
+  ]);
+};
 
 // addition- role
-inquirer.prompt([
-  {
-    type: "input",
-    name: "title",
-    message: `Enter the new roles title`,
-  },
-  {
-    type: "input",
-    name: "sal",
-    message: `Enter the salary for the role`,
-  },
-]);
+addRole = () => {
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "title",
+      message: `Enter the new roles title`,
+    },
+    {
+      type: "input",
+      name: "sal",
+      message: `Enter the salary for the role`,
+    },
+  ]);
+};
 
 // addition- department
-inquirer.prompt([
-  {
-    type: "input",
-    name: "dep",
-    message: `Enter the departments title`,
-  },
-]);
+addDep = () => {
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "dep",
+      message: `Enter the departments title`,
+    },
+  ]);
+};
 
 // update- employee
-
-inquirer.prompt([
-  {
-    type: "input",
-    name: "empup1",
-    message: `Enter the id of the employee you would like to update`,
-  },
-  {
-    type: "input",
-    name: "empup2",
-    message: `Enter the new first name `,
-  },
-  {
-    type: "input",
-    name: "empup3",
-    message: `Enter the new last name`,
-  },
-]);
+updateEmp = () => {
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "empup1",
+      message: `Enter the id of the employee you would like to update`,
+    },
+    {
+      type: "input",
+      name: "empup2",
+      message: `Enter the new first name `,
+    },
+    {
+      type: "input",
+      name: "empup3",
+      message: `Enter the new last name`,
+    },
+  ]);
+};
 
 // update- role
-inquirer.prompt([
-  {
-    type: "input",
-    name: "roleup1",
-    message: `Enter the id of the role you would like to update`,
-  },
-  {
-    type: "input",
-    name: "empup2",
-    message: `Enter the new title`,
-  },
-  {
-    type: "input",
-    name: "empup2",
-    message: `Enter the new salary`,
-  },
-]);
+updateRole = () => {
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "roleup1",
+      message: `Enter the id of the role you would like to update`,
+    },
+    {
+      type: "input",
+      name: "empup2",
+      message: `Enter the new title`,
+    },
+    {
+      type: "input",
+      name: "empup2",
+      message: `Enter the new salary`,
+    },
+  ]);
+};
 
 // update- department
-inquirer.prompt([
-  {
-    type: "input",
-    name: "roleup1",
-    message: `Enter the id of the department you would like to update`,
-  },
-  {
-    type: "input",
-    name: "empup2",
-    message: `Enter the new department name`,
-  },
-]);
+updateDep = () => {
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "roleup1",
+      message: `Enter the id of the department you would like to update`,
+    },
+    {
+      type: "input",
+      name: "empup2",
+      message: `Enter the new department name`,
+    },
+  ]);
+};
 
 // removal- works on all
-inquirer.prompt([
-  {
-    type: "input",
-    name: "gone",
-    message: `Which ${answer} by id would you like to remove`,
-  },
-]);
+deleteInq = () => {
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "gone",
+      message: `Which ${answer} by id would you like to remove`,
+    },
+  ]);
+};
