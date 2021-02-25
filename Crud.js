@@ -57,4 +57,43 @@ const Add = () => {
   );
 };
 
-Add();
+// update function
+const Update = () => {
+  console.log("Updating?...\n");
+  connection.query(
+    `UPDATE employee SET ? WHERE ?`,
+    [
+      {
+        firstName: "Billow",
+      },
+      {
+        id: "1",
+      },
+    ],
+    (err, res) => {
+      if (err) throw err;
+      console.log("Welcome!");
+      viewEmployees();
+    }
+  );
+};
+
+Update();
+
+// inquire
+
+// inquirer
+//     .prompt([
+//       {
+//         type: "list",
+//         name: "choice",
+//         message: "How would you like to assert dominance on the organization?",
+//         choices: [
+//           "View all employees",
+//           " a emplpyee",
+//           "Add a employee role",
+//           "Add a department",
+//           "Fir an "
+//         ],
+//       },
+//     ])
