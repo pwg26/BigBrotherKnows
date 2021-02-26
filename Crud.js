@@ -68,40 +68,28 @@ const Delete = () => {
 };
 
 // Transitional function to add
-const Add = (answer) => {
-  switch (answer) {
-    case "Add a employee":
-      addEmp();
-      break;
-    case "Add a employee role":
-      addRole();
-      break;
-  }
-};
+// const Add = (answer) => {
+//   switch (answer) {
+//     case "Add a employee":
+//       addEmp();
+//       break;
+//     case "Add a employee role":
+//       addRole();
+//       break;
+//     case "Add a department":
+//       addDep();
+//       break;
+//   }
+// };
 
 // update function with inquirer built in
-const Update = (answers) => {
-  switch (answer.first) {
-    case "Update a employee":
-      console.log("Updating?...\n");
-      connection.query(
-        `UPDATE employee SET ? WHERE ?`,
-        [
-          {
-            firstName: "Billow",
-          },
-          {
-            id: "1",
-          },
-        ],
-        (err, res) => {
-          if (err) throw err;
-          console.log("Welcome!");
-          viewEmployees();
-        }
-      );
-  }
-};
+// const Update = (answers) => {
+//   switch (answer.first) {
+//     case :
+
+//     break;
+//   }
+// };
 
 // inquire prompts ===================================
 // Initial question
@@ -206,7 +194,6 @@ addRole = () => {
         (err, res) => {
           if (err) throw err;
           console.log("Role added!");
-          viewEmployees();
           init();
         }
       );
@@ -215,34 +202,77 @@ addRole = () => {
 
 // addition- department
 addDep = () => {
-  inquirer.prompt([
-    {
-      type: "input",
-      name: "dep",
-      message: `Enter the departments title`,
-    },
-  ]);
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "dep",
+        message: `Enter the departments title`,
+      },
+    ])
+    .then((answers) => {
+      console.log("Adding Department\n");
+      connection.query(
+        `INSERT INTO department(name) VALUES ("${answers.dep}")`,
+        (err, res) => {
+          if (err) throw err;
+          console.log(" department added!");
+          init();
+        }
+      );
+    });
 };
 
 // update- employee
 updateEmp = () => {
-  inquirer.prompt([
-    {
-      type: "input",
-      name: "empup1",
-      message: `Enter the id of the employee you would like to update`,
-    },
-    {
-      type: "input",
-      name: "empup2",
-      message: `Enter the new first name `,
-    },
-    {
-      type: "input",
-      name: "empup3",
-      message: `Enter the new last name`,
-    },
-  ]);
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "empup1",
+        message: `Enter the id of the employee you would like to update`,
+      },
+      {
+        type: "input",
+        name: "empup2",
+        message: `Enter the new first name `,
+      },
+      {
+        type: "input",
+        name: "empup3",
+        message: `Enter the new last name`,
+      },
+      {
+        type: "input",
+        name: "empup4",
+        message: `Enter the new role_id`,
+      },
+    ])
+    .then((answers) => {
+      console.log("Updating employee\n");
+      connection.query(
+        `UPDATE employee SET ?, ?, ? WHERE ?`,
+        [
+          {
+            firstName: answers.empup2,
+          },
+          {
+            lastName: answers.empup3,
+          },
+          {
+            role_id: answers.empup4,
+          },
+          {
+            id: answers.empup1,
+          },
+        ],
+        (err, res) => {
+          if (err) throw err;
+          console.log("Employee Updated!");
+          viewEmployees();
+        }
+      );
+    });
 };
 
 // update- role
@@ -310,17 +340,17 @@ transition = (answers) => {
       break;
 
     case "Add a employee":
-      Add(answers.first);
+      addEmp();
       break;
     case "Add a employee role":
-      Add(answers.first);
+      addRole();
       break;
     case "Add a department":
-      Add(answers.first);
+      addDep();
       break;
 
     case "Update a employee":
-      Update(answers.first);
+      updateEmp();
       break;
 
     case "Update a employee role":
