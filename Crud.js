@@ -26,6 +26,7 @@ const viewEmployees = () => {
     (err, res) => {
       if (err) throw err;
       console.table(res);
+      init();
     }
   );
 };
@@ -37,6 +38,7 @@ const viewTable = (answer) => {
     connection.query(`SELECT * FROM role`, (err, res) => {
       if (err) throw err;
       console.table(res);
+      init();
     });
   } else {
     console.log(answer);
@@ -44,11 +46,12 @@ const viewTable = (answer) => {
     connection.query(`SELECT * FROM department`, (err, res) => {
       if (err) throw err;
       console.table(res);
+      init();
     });
   }
 };
 
-// Function to delete given employe
+// Function to delete
 const Delete = () => {
   console.log("Firing ?...\n");
   connection.query(
@@ -64,17 +67,16 @@ const Delete = () => {
   );
 };
 
-// Function to deleate given employe
-const Add = () => {
-  console.log("Firing?...\n");
-  connection.query(
-    `INSERT INTO employee (firstName, lastName, role_id) VALUES("John", "Buck", 5)`,
-    (err, res) => {
-      if (err) throw err;
-      console.log("Welcome!");
-      viewEmployees();
-    }
-  );
+// Transitional function to add
+const Add = (answer) => {
+  switch (answer) {
+    case "Add a employee":
+      addEmp();
+      break;
+    case "Add a employee role":
+      addRole();
+      break;
+  }
 };
 
 // update function with inquirer built in
@@ -133,39 +135,82 @@ init = () => {
 
 // addition- employee
 addEmp = () => {
-  inquirer.prompt([
-    {
-      type: "input",
-      name: "fname",
-      message: `Enter first the employees first name`,
-    },
-    {
-      type: "input",
-      name: "lname",
-      message: `Enter first the employees last name`,
-    },
-    {
-      type: "input",
-      name: "role",
-      message: `Enter the employee role number`,
-    },
-  ]);
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "fname",
+        message: `Enter first the employees first name`,
+      },
+      {
+        type: "input",
+        name: "lname",
+        message: `Enter first the employees last name`,
+      },
+      {
+        type: "input",
+        name: "role",
+        message: `Enter the employee role number`,
+      },
+    ])
+    .then((answers) => {
+      console.log("Adding Employee\n");
+      connection.query(
+        `INSERT INTO employee (firstName, lastName, role_id) VALUES ("${
+          answers.fname
+        }", 
+        
+        "${answers.lname}",
+        
+        ${parseInt(answers.role)})`,
+        (err, res) => {
+          if (err) throw err;
+          console.log("Employee added!");
+          viewEmployees();
+          init();
+        }
+      );
+    });
 };
 
 // addition- role
 addRole = () => {
-  inquirer.prompt([
-    {
-      type: "input",
-      name: "title",
-      message: `Enter the new roles title`,
-    },
-    {
-      type: "input",
-      name: "sal",
-      message: `Enter the salary for the role`,
-    },
-  ]);
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "title",
+        message: `Enter the new roles title`,
+      },
+      {
+        type: "input",
+        name: "sal",
+        message: `Enter the salary for the role`,
+      },
+      {
+        type: "input",
+        name: "did",
+        message: `Enter the role's department id`,
+      },
+    ])
+    .then((answers) => {
+      console.log("Adding Role\n");
+      connection.query(
+        `INSERT INTO role(title, salary, department_id) VALUES ("${
+          answers.title
+        }", 
+        
+        "${answers.sal}",
+        
+        ${parseInt(answers.did)})`,
+        (err, res) => {
+          if (err) throw err;
+          console.log("Role added!");
+          viewEmployees();
+          init();
+        }
+      );
+    });
 };
 
 // addition- department
@@ -248,6 +293,7 @@ deleteInq = () => {
   ]);
 };
 
+// transition after first prompt
 transition = (answers) => {
   switch (answers.first) {
     case "View all employees":
