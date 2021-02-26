@@ -13,7 +13,7 @@ const connection = mysql.createConnection({
   database: "dre_db",
 });
 
-// view deleate, update functions ===============================
+// view functions ===============================
 
 // Function to display all employees and data
 const viewEmployees = () => {
@@ -51,51 +51,7 @@ const viewTable = (answer) => {
   }
 };
 
-// Function to delete
-const Delete = () => {
-  console.log("Firing ?...\n");
-  connection.query(
-    `DELETE FROM employee WHERE ?`,
-    {
-      id: 5,
-    },
-    (err, res) => {
-      if (err) throw err;
-      console.log("Gone!");
-      viewEmployees();
-    }
-  );
-};
-
-// inquire prompts ===================================
-// Initial question
-init = () => {
-  inquirer
-    .prompt([
-      {
-        type: "list",
-        name: "first",
-        message: "How would you like to assert dominance on the organization?",
-        choices: [
-          "View all employees",
-          "Add a employee",
-          "Update a employee",
-          "Fire a employee",
-          "View all employee roles",
-          "Add a employee role",
-          "Update a employee role",
-          "Remove a employee role",
-          "View all departments",
-          "Add a department",
-          "Update a department",
-          "Remove a department",
-        ],
-      },
-    ])
-    .then((answers) => {
-      transition(answers);
-    });
-};
+// Add/updat/delete/functions ===================================
 
 // addition- employee
 addEmp = () => {
@@ -335,14 +291,103 @@ updateDep = () => {
 };
 
 // removal- works on all
-deleteInq = () => {
-  inquirer.prompt([
-    {
-      type: "input",
-      name: "gone",
-      message: `Which ${answer} by id would you like to remove`,
-    },
-  ]);
+deleteAny = (answer) => {
+  switch (answer) {
+    case "Fire a employee":
+      inquirer
+        .prompt([
+          {
+            type: "input",
+            name: "gone",
+            message: `Which employee by id would you like to remove?`,
+          },
+        ])
+        .then((answers) => {
+          console.log("Deleting employee\n");
+          connection.query(
+            `Delete from employee WHERE ${answers.gone}`,
+            (err, res) => {
+              if (err) throw err;
+              console.log("employee deleted!");
+              init();
+            }
+          );
+        });
+      break;
+
+    case "Remove a employee role":
+      inquirer
+        .prompt([
+          {
+            type: "input",
+            name: "gone",
+            message: `Which role by id would you like to remove?`,
+          },
+        ])
+        .then((answers) => {
+          console.log("Deleting employee role\n");
+          connection.query(
+            `Delete from role WHERE ${answers.gone}`,
+            (err, res) => {
+              if (err) throw err;
+              console.log("role deleted!");
+              init();
+            }
+          );
+        });
+      break;
+
+    case "Remove a department":
+      inquirer
+        .prompt([
+          {
+            type: "input",
+            name: "gone",
+            message: `Which department by id would you like to remove?`,
+          },
+        ])
+        .then((answers) => {
+          console.log("Deleting department\n");
+          connection.query(
+            `Delete from department WHERE ${answers.gone}`,
+            (err, res) => {
+              if (err) throw err;
+              console.log("department deleted!");
+              init();
+            }
+          );
+        });
+      break;
+  }
+};
+// initialization and transition==================
+// Initial question
+init = () => {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "first",
+        message: "How would you like to assert dominance on the organization?",
+        choices: [
+          "View all employees",
+          "Add a employee",
+          "Update a employee",
+          "Fire a employee",
+          "View all employee roles",
+          "Add a employee role",
+          "Update a employee role",
+          "Remove a employee role",
+          "View all departments",
+          "Add a department",
+          "Update a department",
+          "Remove a department",
+        ],
+      },
+    ])
+    .then((answers) => {
+      transition(answers);
+    });
 };
 
 // transition after first prompt
@@ -384,14 +429,15 @@ transition = (answers) => {
       break;
 
     case "Fire a employee":
-      Delete(answers.first);
+      deleteAny(answers.first);
       break;
     case "Remove a employee role":
-      Delete(answers.first);
+      deleteAny(answers.first);
       break;
     case "Remove a department":
-      Delete(answers.first);
+      deleteAny(answers.first);
       break;
   }
 };
+// kicks everything off
 init();
