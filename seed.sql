@@ -1,5 +1,6 @@
 USE dre_db;
 
+
 INSERT INTO department
     (name)
 VALUES
@@ -7,7 +8,7 @@ VALUES
     ('Finance'),
     ('IT');
 
-
+USE dre_db;
 
 INSERT INTO role (title, salary, department_id)
 VALUES('Intern', 5000, 1), 
@@ -25,7 +26,7 @@ VALUES('Intern', 5000, 1),
 
 
 INSERT INTO employee (firstName, lastName, role_id)
-VALUES('Bill', 'Cosby', 1), 
+VALUES('Billy', 'Bob', 1), 
 ('Barry', 'Mcockiner', 2),
 ('Larry', 'Early', 3),
 ('Joe', 'Shmo', 4),
