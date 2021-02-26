@@ -1,3 +1,5 @@
+-- forign keys and caskadeding allow universal change between tables
+
 DROP DATABASE IF EXISTS dre_db;
 CREATE DATABASE dre_db;
 USE dre_db;
