@@ -31,7 +31,7 @@ To begin a database was created using mysql workbench to generate three tables f
 <img src="https://github.com/pwg26/BigBrotherKnows/blob/main/images/code2.png">
 ## Instillation
 After cloning the repo to a desired location and navigating to that location to the terminal, the user enters npm i to utilize the necessary node modules.
-<img src="https://github.com/pwg26/BigBrotherKnows/blob/main/images/code1.view">
+<img src="https://github.com/pwg26/BigBrotherKnows/blob/main/images/view.png">
 
 ## Usage
 To use the application the user simply types node Crude.js into the terminal then follows the prompts for viewing, adding and  updating the database. Once the user is satisfied with their sesion they will use the key command  control + c to break the connection, stopping the application.
