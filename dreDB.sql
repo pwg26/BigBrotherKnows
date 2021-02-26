@@ -14,7 +14,7 @@ CREATE TABLE role(
   salary DECIMAL(8,2)NOT NULL,
   department_id INTEGER NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (department_id) REFERENCES department(id)
+  FOREIGN KEY (department_id) REFERENCES department(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE employee(
@@ -24,9 +24,8 @@ CREATE TABLE employee(
   role_id INTEGER NOT NULL,
   manager_id INTEGER,
   PRIMARY KEY (id),
-  FOREIGN KEY (role_id) REFERENCES role(id)
+  FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
 -- selects all tables******
 
 -- SELECT employee.id, employee.firstName, employee.lastName, role.salary, role.title, department.name

@@ -34,13 +34,14 @@ const viewEmployees = () => {
 const viewTable = (answer) => {
   if (answer === "View all employee roles") {
     console.log("Viewing all employee roles\n");
-    connection.query(`SELECT * FROM roles`, (err, res) => {
+    connection.query(`SELECT * FROM role`, (err, res) => {
       if (err) throw err;
       console.table(res);
     });
   } else {
+    console.log(answer);
     console.log("Viewing all departments\n");
-    connection.query(`SELECT * FROM departments`, (err, res) => {
+    connection.query(`SELECT * FROM department`, (err, res) => {
       if (err) throw err;
       console.table(res);
     });
@@ -102,28 +103,32 @@ const Update = (answers) => {
 
 // inquire prompts ===================================
 // Initial question
-Init = () => {
-  inquirer.prompt([
-    {
-      type: "list",
-      name: "first",
-      message: "How would you like to assert dominance on the organization?",
-      choices: [
-        "View all employees",
-        "Add a employee",
-        "Update a employee",
-        "Fire a employee",
-        "View all employee roles",
-        "Add a employee role",
-        "Update a employee role",
-        "remove a employee role",
-        "View all departments",
-        "Add a department",
-        "Update a department",
-        "Remove a department",
-      ],
-    },
-  ]);
+init = () => {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "first",
+        message: "How would you like to assert dominance on the organization?",
+        choices: [
+          "View all employees",
+          "Add a employee",
+          "Update a employee",
+          "Fire a employee",
+          "View all employee roles",
+          "Add a employee role",
+          "Update a employee role",
+          "Remove a employee role",
+          "View all departments",
+          "Add a department",
+          "Update a department",
+          "Remove a department",
+        ],
+      },
+    ])
+    .then((answers) => {
+      transition(answers);
+    });
 };
 
 // addition- employee
@@ -243,24 +248,52 @@ deleteInq = () => {
   ]);
 };
 
-Init().then((answers) => {
+transition = (answers) => {
   switch (answers.first) {
     case "View all employees":
       viewEmployees();
       break;
-    case "View all employee roles" || "View all departments":
+    case "View all departments":
+      console.log(answers.first);
       viewTable(answers.first);
       break;
-    case "Add a employee" || "Add a employee role" || "Add a department":
+
+    case "View all employee roles":
+      console.log(answers.first);
+      viewTable(answers.first);
+      break;
+
+    case "Add a employee":
       Add(answers.first);
       break;
-    case "Update a employee" ||
-      "Update a employee role" ||
-      "Update a department":
+    case "Add a employee role":
+      Add(answers.first);
+      break;
+    case "Add a department":
+      Add(answers.first);
+      break;
+
+    case "Update a employee":
       Update(answers.first);
       break;
-    case "Fire a employee" || "remove a employee role" || "Remove a department":
+
+    case "Update a employee role":
+      Update(answers.first);
+      break;
+
+    case "Update a department":
+      Update(answers.first);
+      break;
+
+    case "Fire a employee":
+      Delete(answers.first);
+      break;
+    case "Remove a employee role":
+      Delete(answers.first);
+      break;
+    case "Remove a department":
       Delete(answers.first);
       break;
   }
-});
+};
+init();
