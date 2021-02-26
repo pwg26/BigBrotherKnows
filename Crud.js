@@ -67,30 +67,6 @@ const Delete = () => {
   );
 };
 
-// Transitional function to add
-// const Add = (answer) => {
-//   switch (answer) {
-//     case "Add a employee":
-//       addEmp();
-//       break;
-//     case "Add a employee role":
-//       addRole();
-//       break;
-//     case "Add a department":
-//       addDep();
-//       break;
-//   }
-// };
-
-// update function with inquirer built in
-// const Update = (answers) => {
-//   switch (answer.first) {
-//     case :
-
-//     break;
-//   }
-// };
-
 // inquire prompts ===================================
 // Initial question
 init = () => {
@@ -269,7 +245,7 @@ updateEmp = () => {
         (err, res) => {
           if (err) throw err;
           console.log("Employee Updated!");
-          viewEmployees();
+          init();
         }
       );
     });
@@ -277,39 +253,85 @@ updateEmp = () => {
 
 // update- role
 updateRole = () => {
-  inquirer.prompt([
-    {
-      type: "input",
-      name: "roleup1",
-      message: `Enter the id of the role you would like to update`,
-    },
-    {
-      type: "input",
-      name: "empup2",
-      message: `Enter the new title`,
-    },
-    {
-      type: "input",
-      name: "empup2",
-      message: `Enter the new salary`,
-    },
-  ]);
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "roleup1",
+        message: `Enter the id of the role you would like to update`,
+      },
+      {
+        type: "input",
+        name: "roleup2",
+        message: `Enter the new title`,
+      },
+      {
+        type: "input",
+        name: "roleup3",
+        message: `Enter the new salary`,
+      },
+    ])
+    .then((answers) => {
+      console.log("Updating employee\n");
+      connection.query(
+        `UPDATE employee SET ?, ?, ? WHERE ?`,
+        [
+          {
+            title: answers.roleup2,
+          },
+          {
+            salary: answers.roleup3,
+          },
+          {
+            department_id: answers.roleup4,
+          },
+          {
+            id: answers.roleup1,
+          },
+        ],
+        (err, res) => {
+          if (err) throw err;
+          console.log("Roles updated!");
+          init();
+        }
+      );
+    });
 };
 
 // update- department
 updateDep = () => {
-  inquirer.prompt([
-    {
-      type: "input",
-      name: "roleup1",
-      message: `Enter the id of the department you would like to update`,
-    },
-    {
-      type: "input",
-      name: "empup2",
-      message: `Enter the new department name`,
-    },
-  ]);
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "depup1",
+        message: `Enter the id of the department you would like to update`,
+      },
+      {
+        type: "input",
+        name: "depup2",
+        message: `Enter the new department name`,
+      },
+    ])
+    .then((answers) => {
+      console.log("Updating Departments\n");
+      connection.query(
+        `UPDATE department SET ? WHERE ?`,
+        [
+          {
+            name: answers.dep2,
+          },
+          {
+            id: answers.dep1,
+          },
+        ],
+        (err, res) => {
+          if (err) throw err;
+          console.log("Departments updated!");
+          init();
+        }
+      );
+    });
 };
 
 // removal- works on all
@@ -354,11 +376,11 @@ transition = (answers) => {
       break;
 
     case "Update a employee role":
-      Update(answers.first);
+      updateRole();
       break;
 
     case "Update a department":
-      Update(answers.first);
+      updateDep();
       break;
 
     case "Fire a employee":
