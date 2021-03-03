@@ -34,6 +34,8 @@ After cloning the repo to a desired location and navigating to that location to 
 <img src="https://github.com/pwg26/BigBrotherKnows/blob/main/images/view.png">
 
 ## Usage
+view my tutorial here! https://www.youtube.com/watch?v=A6XzUtGPT58&feature=youtu.be&ab_channel=PierceGladfelter
+
 To use the application the user simply types node Crude.js into the terminal then follows the prompts for viewing, adding and  updating the database. Once the user is satisfied with their sesion they will use the key command  control + c to break the connection, stopping the application.
 
 
